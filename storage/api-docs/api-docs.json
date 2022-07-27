@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your super  ApplicationAPI",
+        "title": "POS Sate",
         "version": "1.0.0"
     },
     "paths": {
@@ -18,13 +18,18 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "name",
+                                    "username",
+                                    "fullname",
                                     "email",
                                     "password",
-                                    "password_confirmation"
+                                    "password_confirmation",
+                                    "role"
                                 ],
                                 "properties": {
-                                    "name": {
+                                    "username": {
+                                        "type": "text"
+                                    },
+                                    "fullname": {
                                         "type": "text"
                                     },
                                     "email": {
@@ -35,6 +40,9 @@
                                     },
                                     "password_confirmation": {
                                         "type": "password"
+                                    },
+                                    "role": {
+                                        "type": "text"
                                     }
                                 },
                                 "type": "object"
@@ -143,6 +151,397 @@
                         "description": "Resource Not Found"
                     }
                 }
+            }
+        },
+        "/api/branch": {
+            "get": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "User get Branch",
+                "description": "User get Branch here",
+                "operationId": "Index Branch",
+                "responses": {
+                    "201": {
+                        "description": "Insert branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Insert branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "User update Branch",
+                "description": "User update Branch here",
+                "operationId": "updateBranch",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "branch_name",
+                                    "phone_number",
+                                    "address",
+                                    "social_media"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "branch_name": {
+                                        "type": "text",
+                                        "example": "pamulang"
+                                    },
+                                    "phone_number": {
+                                        "type": "text",
+                                        "example": "082134574837"
+                                    },
+                                    "address": {
+                                        "type": "text",
+                                        "example": "jl muchtar"
+                                    },
+                                    "social_media": {
+                                        "type": "text",
+                                        "example": "instagram"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {},
+                            "examples": {
+                                "Update Branch": {
+                                    "summary": "Update Branch",
+                                    "value": {
+                                        "id": 1,
+                                        "branch_code": "BDG",
+                                        "branch_name": "bandung",
+                                        "phone_number": "081238473847",
+                                        "address": "dipati ukur",
+                                        "social_media": "ig"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Update branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Update branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "User input Branch",
+                "description": "User input Branch here",
+                "operationId": "Create Branch",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "branch_code",
+                                    "branch_name",
+                                    "phone_number",
+                                    "address",
+                                    "social_media"
+                                ],
+                                "properties": {
+                                    "branch_code": {
+                                        "type": "text"
+                                    },
+                                    "branch_name": {
+                                        "type": "text"
+                                    },
+                                    "phone_number": {
+                                        "type": "text"
+                                    },
+                                    "address": {
+                                        "type": "text"
+                                    },
+                                    "social_media": {
+                                        "type": "text"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Insert branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Insert branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Branch"
+                ],
+                "summary": "User delete Branch",
+                "description": "User delete Branch here",
+                "operationId": "Delete Branch",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {},
+                            "examples": {
+                                "Delete Branch": {
+                                    "summary": "Delete Branch",
+                                    "value": {
+                                        "id": 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Delete branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Delete branch Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employee": {
+            "post": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "User input Employee",
+                "description": "User input Employee here",
+                "operationId": "Create Employee",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "branch_id",
+                                    "full_name",
+                                    "nick_name",
+                                    "phone_number"
+                                ],
+                                "properties": {
+                                    "branch_id": {
+                                        "type": "text"
+                                    },
+                                    "full_name": {
+                                        "type": "text"
+                                    },
+                                    "nick_name": {
+                                        "type": "text"
+                                    },
+                                    "phone_number": {
+                                        "type": "text"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Insert employee Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Insert employee Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

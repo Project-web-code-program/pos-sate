@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -25,11 +26,13 @@ class ApiController extends Controller
      *            mediaType="multipart/form-data",
      *            @OA\Schema(
      *               type="object",
-     *               required={"name","email", "password", "password_confirmation"},
-     *               @OA\Property(property="name", type="text"),
+     *               required={"username","fullname","email", "password", "password_confirmation","role"},
+     *               @OA\Property(property="username", type="text"),
+     *               @OA\Property(property="fullname", type="text"),
      *               @OA\Property(property="email", type="text"),
      *               @OA\Property(property="password", type="password"),
-     *               @OA\Property(property="password_confirmation", type="password")
+     *               @OA\Property(property="password_confirmation", type="password"),
+     *               @OA\Property(property="role", type="text")
      *            ),
      *        ),
      *    ),
@@ -55,11 +58,14 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         //Validate data
-        $data = $request->only('name', 'email', 'password');
+        $data = $request->only('username', 'fullname', 'email', 'password', 'role', 'branch_id');
         $validator = Validator::make($data, [
-            'name' => 'required|string',
+            'username' => 'required|username|unique:users',
+            'fullname' => 'required|string|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:50',
+            'role' => 'required|string',
+            'branch_id' => 'required|integer',
         ]);
 
         //Send failed response if request is not valid
@@ -69,7 +75,7 @@ class ApiController extends Controller
 
         //Request is valid, create new user
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
@@ -78,7 +84,7 @@ class ApiController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'User created successfully',
-            'data' => $user,
+            'user' => $user,
         ], Response::HTTP_OK);
     }
 
@@ -152,10 +158,21 @@ class ApiController extends Controller
             ], 500);
         }
 
-        //Token created, return with success response and jwt token
+        $user = DB::table('users as u')
+            ->join('branches as b', 'u.branch_id', '=', 'b.id')
+            ->select('b.id as branch_id', 'b.branch_name as branch_name', 'u.username as username', 'u.fullname as fullname', 'u.email as email', 'u.role as role')
+            // ->select('username')
+            ->where('u.id', '=', $request->user()->id)
+            ->get();
+
+        // Token created, return with success response and jwt token
         return response()->json([
             'success' => true,
             'token' => $token,
+            'username' => $user[0]->username,
+            'branch_name' => $user[0]->branch_name,
+            'role' => $user[0]->role,
+            'email'=> $user[0]->email
         ]);
     }
 
